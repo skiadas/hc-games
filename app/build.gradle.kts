@@ -21,6 +21,7 @@ dependencies {
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+    implementation("io.gitlab.autumnmeowmeow:jexer:1.7.0")
     // This dependency is used by the application.
     implementation(libs.guava)
 }

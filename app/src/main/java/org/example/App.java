@@ -3,12 +3,38 @@
  */
 package org.example;
 
-public class App {
+import jexer.TApplication;
+import jexer.TImage;
+import jexer.*;
+import jexer.backend.Screen;
+import jexer.backend.SwingTerminal;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+
+public class App extends TApplication {
     public String getGreeting() {
         return "Hello World!";
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    public App() throws Exception {
+        super(BackendType.SWING);
+
+        // Create the Swing event listeners
+        TWindow window = addWindow("Game", 600, 400);
+        window.setCloseBox(false);
+        InputStream in = getClass().getClassLoader().getResourceAsStream("images/carddeck.png");
+        BufferedImage buff = ImageIO.read(in);
+
+        TImage img = new TImage(this.getActiveWindow() , 5, 5, 100, 100, buff, 0, 0);
+        img.setActive(true);
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        App app = new App();
+        app.run();
     }
 }
