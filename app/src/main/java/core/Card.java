@@ -2,15 +2,15 @@ package core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Card {
-    public enum Suit { HEARTS, SPADES, DIAMONDS, CLUBS }
-    public enum Color { RED, BLACK }
-    public static final int[] ranks = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+    private static final int[] ranks = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
     private final int rank;
     private final Suit suit;
+
     public Card(int rank, Suit suit) {
         boolean validRank = IntStream.of(ranks).anyMatch(r -> r == rank);
 
@@ -21,19 +21,8 @@ public class Card {
         else this.suit = suit;
     }
 
-    // Possibly make this private later, if all color logic is in the Card class
-    public Color getColor() {
-        return switch (suit) {
-            case CLUBS, SPADES -> Color.BLACK;
-            case HEARTS, DIAMONDS -> Color.RED;
-        };
-    }
     public boolean isSameColorAs(Card toCompare) {
-        return this.getColor() == toCompare.getColor();
-    }
-
-    public boolean isSameRankAs(Card toCompare) {
-        return this.rank == toCompare.rank;
+        return this.suit.getColor() == toCompare.suit.getColor();
     }
 
     public boolean ranksDirectlyAbove(Card toCompare) {
@@ -54,8 +43,23 @@ public class Card {
         return deck;
     }
 
-    public boolean equals(Card toCompare) {
-        return suit == toCompare.suit && this.isSameRankAs(toCompare);
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return rank == card.rank && suit == card.suit;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, suit);
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "rank=" + rank +
+                ", suit=" + suit +
+                '}';
+    }
 }
