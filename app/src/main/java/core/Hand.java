@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static core.Card.fullDeck;
-
 public class Hand {
-    private List<Card> cards;
+    List<Card> cards;
 
     public Hand(List<Card> cards){
+        this.cards = new ArrayList<Card>(cards);
+    }
+
+    public Hand() {
         this.cards = new ArrayList<Card>();
     }
 
@@ -17,17 +19,20 @@ public class Hand {
         Collections.shuffle(cards);
     }
 
-    // mainly for testing won't be used in final game
-    public List<Card> getSetDeck(){
-        return fullDeck();
+    // used for testing won't be used in final game
+    public static Hand initFullDeck(){
+        return new Hand(Card.fullDeck());
     }
 
-    public Card drawCard(){
-        if(cards.isEmpty()){
-            return null;
-        }
-        return cards.remove(0);
-    }
 
+//    public Card drawCard(int numberOfCards){
+//        if(cards.isEmpty()){
+//            return null;
+//        }
+//        for (int i = 0; i < numberOfCards; i++) {
+//            return cards.remove(0);
+//        }
+//
+//    }
 
 }
