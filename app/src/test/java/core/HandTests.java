@@ -20,4 +20,5 @@ public class HandTests {
         assertNotEquals(hand1.cards, hand2.cards);
     }
 
+
 }
