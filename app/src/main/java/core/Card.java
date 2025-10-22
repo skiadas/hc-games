@@ -62,4 +62,11 @@ public class Card {
                 ", suit=" + suit +
                 '}';
     }
+
+    public Suit getSuit() {
+        return suit;
+    }
+    public int getRank() {
+        return rank;
+    }
 }
