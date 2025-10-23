@@ -68,4 +68,12 @@ public class CardTests {
         assertFalse(card1.equals(card3));
         assertFalse(card2.equals(card4));
     }
+
+    @Test
+    void getRankMethodWorks() {
+        Card card1 = new Card(5, HEARTS);
+        assertEquals(5, card1.getRank());
+        Card card2 = new Card(12, SPADES);
+        assertEquals(12, card2.getRank());
+    }
 }
