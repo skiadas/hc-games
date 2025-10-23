@@ -19,6 +19,17 @@ public class HandTests {
         hand2.shuffle();
         assertNotEquals(hand1.cards, hand2.cards);
     }
+    @Test
+    public void checkForShuffledDeck(){
+        Hand hand1 = Hand.shuffledFullDeck();
+        Hand hand2 = Hand.initFullDeck();
+        assertNotEquals(hand1.cards, hand2.cards);
+    }
+
+    public void checkDrawCards() {
+        Hand hand1 = Hand.initFullDeck();
+
+    }
 
 
 }

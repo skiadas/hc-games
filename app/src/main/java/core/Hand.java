@@ -25,15 +25,29 @@ public class Hand {
         return new Hand(Card.fullDeck());
     }
 
+    public static Hand shuffledFullDeck(){
+        Hand hand1 = Hand.initFullDeck();
+        hand1.shuffle();
+        return hand1;
+    }
 
-//    public Card drawCard(int numberOfCards){
-//        if(cards.isEmpty()){
-//            return null;
-//        }
-//        for (int i = 0; i < numberOfCards; i++) {
-//            return cards.remove(0);
-//        }
-//
-//    }
+    public List<Card> drawCards(int numberOfCards) {
+        List<Card> drawnCards = new ArrayList<>(numberOfCards);
+
+        for (int i = 0; i < numberOfCards && !cards.isEmpty(); i++) {
+            drawnCards.add(cards.remove(0));
+        }
+
+        return drawnCards;
+    }
+
+    public Card drawCard() {
+        if (cards.isEmpty()) {
+            return null;
+        }
+        return cards.remove(0);
+    }
+
+
 
 }
