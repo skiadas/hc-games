@@ -34,7 +34,25 @@ public class Foundation {
         List<Card> pile = piles.get(suit);
         if (pile.isEmpty()) {
             return rank == 1;
+        } else {
+            return card.ranksDirectlyAbove(pile.get(pile.size() - 1));
         }
-        return false;
+    }
+
+    public int getPileSize(Suit suit) {
+        return piles.get(suit).size();
+    }
+
+    public Card remove(Suit suit) {
+        List<Card> pile = piles.get(suit);
+        if (canRemoveCard(suit)) {
+            Card topCard = pile.remove(pile.size() - 1);
+            return topCard;
+        }
+        throw new RuntimeException("Cannot remove from an empty file.");
+    }
+
+    private boolean canRemoveCard(Suit suit) {
+        return !piles.get(suit).isEmpty();
     }
 }
