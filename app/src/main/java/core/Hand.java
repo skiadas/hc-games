@@ -26,9 +26,9 @@ public class Hand {
     }
 
     public static Hand shuffledFullDeck(){
-        Hand hand1 = Hand.initFullDeck();
-        hand1.shuffle();
-        return hand1;
+        Hand hand = Hand.initFullDeck();
+        hand.shuffle();
+        return hand;
     }
 
     public List<Card> drawCards(int numberOfCards) {
@@ -47,7 +47,5 @@ public class Hand {
         }
         return cards.remove(0);
     }
-
-
 
 }

@@ -2,6 +2,10 @@ package core;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static core.Suit.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HandTests {
@@ -25,10 +29,27 @@ public class HandTests {
         Hand hand2 = Hand.initFullDeck();
         assertNotEquals(hand1.cards, hand2.cards);
     }
+    @Test
+    public void checkDrawCard() {
+        List<Card> someCards = shortListOfCards();
+        Hand hand = new Hand(someCards);
+        assertEquals(new Card(1, Suit.HEARTS), hand.drawCard());
+    }
 
+    @Test
     public void checkDrawCards() {
-        Hand hand1 = Hand.initFullDeck();
+        Hand hand = new Hand(shortListOfCards());
+        Hand hand2 = new Hand(shortListOfCards().subList(0,4));
+        assertEquals(hand2.cards, hand.drawCards(4));
+    }
 
+    private static List<Card> shortListOfCards() {
+        return List.of(
+            new Card(1, HEARTS),
+            new Card(5, SPADES),
+            new Card(7, DIAMONDS),
+            new Card(3, SPADES),
+            new Card(2, HEARTS));
     }
 
 
