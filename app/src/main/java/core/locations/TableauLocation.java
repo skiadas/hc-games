@@ -1,6 +1,22 @@
 package core.locations;
 
+
+import core.Hand;
+import core.TableauPile;
+
 public class TableauLocation implements Location {
-    // We need to have the cards that are in the index and the tableau index itself
-    private int col; // cols are 1 - 7
+    private final TableauPile[] piles;
+
+    public TableauLocation(Hand deck) {
+        piles = new TableauPile[7];
+
+        for (int pile = 0; pile < 7; pile++) {
+            piles[pile] = new TableauPile(deck.drawCards(pile + 1));
+        }
+    }
+
+    public TableauLocation() {
+        this(new Hand());
+    }
+
 }
