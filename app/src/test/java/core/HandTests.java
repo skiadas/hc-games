@@ -50,6 +50,4 @@ public class HandTests {
             new Card(3, SPADES),
             new Card(2, HEARTS));
     }
-
-
 }

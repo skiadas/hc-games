@@ -41,7 +41,6 @@ public class Hand {
         for (int i = 0; i < numberOfCards && !cards.isEmpty(); i++) {
             drawnCards.add(cards.remove(0));
         }
-
         return drawnCards;
     }
 
