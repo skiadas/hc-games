@@ -33,7 +33,7 @@ public class TableauPileTests {
                         new Card(9, SPADES),
                         new Card(1, HEARTS),
                         new Card(7, CLUBS))
-                ,pile.getCards());
+                ,pile.look(1));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class TableauPileTests {
         assertEquals(List.of(new Card(5, HEARTS),
                              new Card(9, SPADES),
                              new Card(1, HEARTS))
-                             ,pile.getCards());
+                             ,pile.look(1));
     }
 
     @Test
@@ -88,18 +88,13 @@ public class TableauPileTests {
     }
 
     @Test
-    void revealTopCardMakesTopCardVisible() {
+    void revealingTopCardMakesTopCardVisible() {
         assertTrue(pile.isValidForPickUp(4));
         pile.pickUp(4);
         assertFalse(pile.isValidForPickUp(3));
-        pile.revealTopCard();
+        pile.revealTopIfNeeded();
         assertFalse(pile.isValidForPickUp(4));
         assertTrue(pile.isValidForPickUp(3));
-    }
-
-    @Test
-    void revealTopCardDoesntWorkWhenAtLeastOneCardIsStillVisible() {
-        assertThrows(RuntimeException.class, () -> pile.revealTopCard());
     }
 
     @Test
@@ -110,7 +105,7 @@ public class TableauPileTests {
                 new Card(1, HEARTS),
                 new Card(7, CLUBS),
                 new Card(6, HEARTS),
-                new Card(5, SPADES)), pile.getCards());
+                new Card(5, SPADES)), pile.look(1));
     }
 
     @Test

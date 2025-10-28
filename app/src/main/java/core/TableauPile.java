@@ -27,17 +27,15 @@ public class TableauPile {
         return pile.size() - 1;
     }
 
-    public void revealTopCard() {
-        if (lowestVisibleIndex <= numberOfCardsInPile()) {
-            throw new RuntimeException("revealTopCard() shouldn't be called when there are still revealed cards on the TableauPile.");
-        }
-        lowestVisibleIndex = numberOfCardsInPile();
+    public void revealTopIfNeeded() {
+        if (lowestVisibleIndex > numberOfCardsInPile()) lowestVisibleIndex = numberOfCardsInPile();
     }
 
-    List<Card> getCards() {
+    List<Card> look(int index) {
+        if (index < 1)  throw new RuntimeException("0 is an invalid index for a TableauPile");
         List<Card> cards = new ArrayList<>(pile);
         cards.remove(0);
-        return cards;
+        return cards.subList(index - 1, cards.size());
     }
 
     public List<Card> pickUp(int index) {
