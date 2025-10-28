@@ -1,19 +1,16 @@
-package core.locations;
+package core;
 
-import core.Hand;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TableauTests {
     @Test
     void canCreateEmptyTableau() {
-        TableauLocation tableau = new TableauLocation();
+        Tableau tableau = new Tableau();
     }
 
     @Test
     void canCreateTableauFromStandardDeck() {
-        TableauLocation tableau = new TableauLocation(Hand.shuffledFullDeck());
+        Tableau tableau = new Tableau(Hand.shuffledFullDeck());
     }
 
     @Test
