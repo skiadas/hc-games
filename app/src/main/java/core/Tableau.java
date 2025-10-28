@@ -20,25 +20,29 @@ public class Tableau {
     }
 
     public List<Card> lookAt(TableauLocation location) {
-        return piles[location.getPile() - 1].look(location.getCard());
+        return piles[getPileAt(location)].look(location.getCard());
+    }
+
+    private int getPileAt(TableauLocation location) {
+        return location.getPile() - 1;
     }
 
     public boolean canAccept(TableauLocation location, List<Card> cards ) {
-        return piles[location.getPile() - 1].canAccept(cards);
+        return piles[getPileAt(location)].canAccept(cards);
     }
 
     public boolean canPickUp(TableauLocation location) {
-        return piles[location.getPile() - 1].isValidForPickUp(location.getCard());
+        return piles[getPileAt(location)].isValidForPickUp(location.getCard());
     }
 
-    public void pickUpAt(TableauLocation location) {
-        piles[location.getPile() - 1].pickUp(location.getCard());
-        piles[location.getPile() - 1].revealTopIfNeeded();
-
+    public List<Card> pickUpAt(TableauLocation location) {
+        List<Card> cards = piles[getPileAt(location)].pickUp(location.getCard());
+        piles[getPileAt(location)].revealTopIfNeeded();
+        return cards;
     }
 
-    public void dropAt(int pile, List<Card> cards) {
-        piles[pile - 1].drop(cards);
+    public void dropAt(TableauLocation tableauLocation, List<Card> cards) {
+        piles[getPileAt(tableauLocation)].drop(cards);
     }
 
 
