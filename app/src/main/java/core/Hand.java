@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public class Hand {
-    List<Card> cards;
+    private final List<Card> cards;
 
     public Hand(List<Card> cards){
         this.cards = new ArrayList<Card>(cards);
@@ -14,6 +14,10 @@ public class Hand {
 
     public Hand() {
         this.cards = new ArrayList<Card>();
+    }
+
+    public List<Card> getCards(){
+        return Collections.unmodifiableList(cards);
     }
 
     public void shuffle(){
@@ -48,4 +52,7 @@ public class Hand {
         return cards.remove(0);
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
 }

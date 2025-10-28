@@ -2,7 +2,6 @@ package core;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static core.Suit.*;
@@ -13,7 +12,7 @@ public class HandTests {
     public void checkForPremadeDeckBeingEqual() {
         Hand hand1 = Hand.initFullDeck();
         Hand hand2 = Hand.initFullDeck();
-        assertEquals(hand1.cards, hand2.cards);
+        assertEquals(hand1.getCards(), hand2.getCards());
     }
 
     @Test
@@ -21,13 +20,13 @@ public class HandTests {
         Hand hand1 = Hand.initFullDeck();
         Hand hand2 = Hand.initFullDeck();
         hand2.shuffle();
-        assertNotEquals(hand1.cards, hand2.cards);
+        assertNotEquals(hand1.getCards(), hand2.getCards());
     }
     @Test
     public void checkForShuffledDeck(){
         Hand hand1 = Hand.shuffledFullDeck();
         Hand hand2 = Hand.initFullDeck();
-        assertNotEquals(hand1.cards, hand2.cards);
+        assertNotEquals(hand1.getCards(), hand2.getCards());
     }
     @Test
     public void checkDrawCard() {
@@ -40,7 +39,7 @@ public class HandTests {
     public void checkDrawCards() {
         Hand hand = new Hand(shortListOfCards());
         Hand hand2 = new Hand(shortListOfCards().subList(0,4));
-        assertEquals(hand2.cards, hand.drawCards(4));
+        assertEquals(hand2.getCards(), hand.drawCards(4));
     }
 
     private static List<Card> shortListOfCards() {
