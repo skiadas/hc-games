@@ -1,5 +1,6 @@
 package core;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.HeaderTransformer;
 
@@ -33,7 +34,24 @@ public class WasteTests {
         Card ace = new Card(1, HEARTS);
         waste.add(ace);
         Card topCard = waste.remove();
+        assertTrue(waste.isEmpty());
+    }
+
+    @Test
+    void returnProperTopCard() {
+        Waste waste = new Waste();
+        Card ace = new Card(1, HEARTS);
+        waste.add(ace);
+        Card topCard = waste.remove();
         assertEquals(ace, topCard);
+    }
+
+    @Test
+    void RuntimeExceptionCheck() {
+        Waste waste = new Waste();
+        Card ace = new Card(1, HEARTS);
+        RuntimeException exception = assertThrows(RuntimeException.class, waste::remove);
+        assertEquals("Cannot remove from an empty pile.", exception.getMessage());
     }
 
     @Test

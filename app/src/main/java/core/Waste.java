@@ -25,11 +25,11 @@ public class Waste {
 
     public Card remove() {
         if (!pile.isEmpty()) {
-            return pile.get(pile.size() - 1);
+            return pile.remove(pile.size() - 1);
         }
         throw new RuntimeException("Cannot remove from an empty pile.");
     }
-
+    // Returns the reverse copy of the pile list
     public List<Card> returnToHand() {
         List<Card> pileCopy = new ArrayList<>(pile);
         reversePile(pileCopy);
