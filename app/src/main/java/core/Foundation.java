@@ -49,7 +49,7 @@ public class Foundation {
             Card topCard = pile.remove(pile.size() - 1);
             return topCard;
         }
-        throw new RuntimeException("Cannot remove from an empty file.");
+        throw new RuntimeException("Cannot remove from an empty pile.");
     }
 
     private boolean canRemoveCard(Suit suit) {

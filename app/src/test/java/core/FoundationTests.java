@@ -79,6 +79,15 @@ public class FoundationTests {
     }
 
     @Test
+    void throwErrorOnEmptyPileRemove() {
+        Foundation foundation = new Foundation();
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            foundation.remove(HEARTS);
+        });
+        assertEquals("Cannot remove from an empty pile.", exception.getMessage());
+    }
+
+    @Test
     void returnProperCardFromRemove() {
         Foundation foundation = new Foundation();
         Card twoOfHearts = new Card(2, HEARTS);
