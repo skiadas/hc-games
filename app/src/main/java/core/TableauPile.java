@@ -7,11 +7,15 @@ public class TableauPile {
     private final List<Card> pile;
     private int lowestVisibleIndex;
 
-    public TableauPile(List<Card> cards) {
+    public TableauPile(List<Card> cards, int visibleCards) {
         pile = new ArrayList<>();
         pile.add(null); // sentinel element
         pile.addAll(List.copyOf(cards));
-        lowestVisibleIndex = numberOfCardsInPile();
+        lowestVisibleIndex = pile.size() - visibleCards;
+    }
+
+    public TableauPile(List<Card> cards) {
+        this(cards, 1);
     }
 
     public TableauPile() {

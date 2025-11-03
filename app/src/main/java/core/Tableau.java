@@ -2,7 +2,10 @@ package core;
 
 import core.locations.TableauLocation;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Tableau {
     private final TableauPile[] piles;
@@ -18,6 +21,26 @@ public class Tableau {
     public Tableau() {
         this(new Hand());
     }
+
+    public static Tableau from(InputStream stream) {
+        Scanner input = new Scanner(stream);
+        Tableau tableau = new Tableau();
+        int visibilityMarker = 0;
+
+        for (int pile = 0; pile < 7 && input.hasNext(); pile++) {
+            String pileString = input.nextLine();
+            String[] cardStrings = pileString.split(" ");
+            List<Card> cards = new ArrayList<>();
+            for (int i = 1; i < cardStrings.length; i++) {
+                if (cardStrings[i].contains("*")) visibilityMarker = i;
+                cards.add(Card.from(cardStrings[i]));
+            }
+            tableau.piles[pile] = new TableauPile(cards, (cards.size() - visibilityMarker) + 1);
+        }
+
+        return tableau;
+    }
+
 
     public List<Card> lookAt(TableauLocation location) {
         return piles[getPileAt(location)].look(location.getCard());

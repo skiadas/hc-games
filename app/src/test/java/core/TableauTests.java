@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Spliterator;
 
 import static core.Suit.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,5 +74,7 @@ class TableauTests {
                     new Card(4, HEARTS)),
                 tableau.lookAt(new TableauLocation(2, 1)));
     }
+
+
 
 }

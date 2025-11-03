@@ -76,4 +76,37 @@ public class CardTests {
         Card card2 = new Card(12, SPADES);
         assertEquals(12, card2.getRank());
     }
+
+    @Test
+    void canCreateCardsFromStrings() {
+        assertCardEqualsString(5, HEARTS, "5H");
+        assertCardEqualsString(13, CLUBS, "13C");
+        assertCardEqualsString(13, CLUBS, "KC");
+        assertCardEqualsString(6, SPADES, "6S");
+        assertCardEqualsString(2, CLUBS, "2C");
+        assertCardEqualsString(8, SPADES, "8S");
+        assertCardEqualsString(9, SPADES, "9S");
+        assertCardEqualsString(10, HEARTS, "10H");
+        assertCardEqualsString(12, DIAMONDS, "QD");
+        assertCardEqualsString(3, HEARTS, "3H");
+        assertCardEqualsString(11, DIAMONDS, "11D");
+        assertCardEqualsString(11, HEARTS, "JH");
+        assertCardEqualsString(11, SPADES, "11S");
+        assertCardEqualsString(11, CLUBS, "11C");
+        assertCardEqualsString(11, CLUBS, "JC");
+        assertCardEqualsString(1, DIAMONDS, "1D");
+        assertCardEqualsString(1, CLUBS, "A♧");
+        assertCardEqualsString(12, DIAMONDS, "12♢");
+        assertCardEqualsString(6, HEARTS, "6♡");
+        assertCardEqualsString(10, SPADES, "10♤");
+        assertCardEqualsString(10, CLUBS, "10♣");
+        assertCardEqualsString(11, DIAMONDS, "11♦");
+        assertCardEqualsString(12, HEARTS, "Q♥");
+        assertCardEqualsString(13, SPADES, "K♠");
+
+    }
+
+    private void assertCardEqualsString(int rank, Suit suit, String string) {
+        assertEquals(new Card(rank, suit), Card.from(string));
+    }
 }
