@@ -78,6 +78,14 @@ public class CardTests {
     }
 
     @Test
+    void getSuitMethodWorks() {
+        Card card1 = new Card(7, CLUBS);
+        assertEquals(CLUBS, card1.getSuit());
+        Card card2 = new Card(13, DIAMONDS);
+        assertEquals(DIAMONDS, card2.getSuit());
+    }
+
+    @Test
     void canCreateCardsFromStrings() {
         assertCardEqualsString(5, HEARTS, "5H");
         assertCardEqualsString(13, CLUBS, "13C");
@@ -104,6 +112,16 @@ public class CardTests {
         assertCardEqualsString(12, HEARTS, "Q♥");
         assertCardEqualsString(13, SPADES, "K♠");
 
+    }
+
+    @Test
+    void canConvertCardsToStringsCorrectly() {
+        Card card1 = new Card(4, HEARTS);
+        Card card2 = new Card(13, CLUBS);
+        Card card3 = new Card(1, DIAMONDS);
+        assertEquals("4H", card1.toString());
+        assertEquals("KC", card2.toString());
+        assertEquals("AD", card3.toString());
     }
 
     private void assertCardEqualsString(int rank, Suit suit, String string) {

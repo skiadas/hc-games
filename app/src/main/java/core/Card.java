@@ -52,6 +52,7 @@ public class Card {
         return new Card(rank, suit);
 
     }
+
     public boolean isSameColorAs(Card toCompare) {
         return this.suit.getColor() == toCompare.suit.getColor();
     }
@@ -88,10 +89,23 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "rank=" + rank +
-                ", suit=" + suit +
-                '}';
+        String cardString = "";
+         cardString += switch (rank) {
+            case 1 -> "A";
+            case 11 -> "J";
+            case 12 -> "Q";
+            case 13 -> "K";
+            default -> rank;
+        };
+
+        cardString += switch (suit) {
+            case HEARTS -> "H";
+            case DIAMONDS -> "D";
+            case CLUBS -> "C";
+            case SPADES -> "S";
+        };
+
+        return cardString;
     }
 
     public Suit getSuit() {
