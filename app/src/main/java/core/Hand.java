@@ -54,4 +54,6 @@ public class Hand {
     public boolean isEmpty() {
         return cards.isEmpty();
     }
+
+    public int size() { return cards.size(); }
 }

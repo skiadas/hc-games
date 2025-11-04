@@ -4,9 +4,9 @@ import core.locations.Location;
 
 public class Game {
 
-    private Waste waste_pile;
-    private Foundation foundation_piles;
-    private Tableau tableau_piles;
+    private Waste wastePile;
+    private Foundation foundationPiles;
+    private Tableau tableauPiles;
     private Hand hand;
 
     public Game() {
@@ -14,21 +14,33 @@ public class Game {
 
     public void initializeGameWithSetHand(){
         hand = Hand.initFullDeck();
-        tableau_piles = new Tableau(hand);
-        foundation_piles = new  Foundation();
-        waste_pile = new Waste();
+        tableauPiles = new Tableau(hand);
+        foundationPiles = new  Foundation();
+        wastePile = new Waste();
         Location selectedLocation = null;
     }
 
     public void initializeGameWithShuffledHand(){
         hand = Hand.shuffledFullDeck();
-        tableau_piles = new Tableau(hand);
-        foundation_piles = new  Foundation();
-        waste_pile = new Waste();
+        tableauPiles = new Tableau(hand);
+        foundationPiles = new  Foundation();
+        wastePile = new Waste();
         Location selectedLocation = null;
     }
 
     public Hand getHand() {
         return hand;
+    }
+
+    public Tableau getTableauPiles() {
+        return tableauPiles;
+    }
+
+    public Foundation getFoundationPiles() {
+        return foundationPiles;
+    }
+
+    public Waste getWastePile() {
+        return wastePile;
     }
 }
