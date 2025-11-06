@@ -12,18 +12,18 @@ public class Game {
     public Game() {
     }
 
-    public void initializeGameWithSetHand(){
+    public void initializeGameWithSetHand() {
         hand = Hand.initFullDeck();
         tableauPiles = new Tableau(hand);
-        foundationPiles = new  Foundation();
+        foundationPiles = new Foundation();
         wastePile = new Waste();
         Location selectedLocation = null;
     }
 
-    public void initializeGameWithShuffledHand(){
+    public void initializeGameWithShuffledHand() {
         hand = Hand.shuffledFullDeck();
         tableauPiles = new Tableau(hand);
-        foundationPiles = new  Foundation();
+        foundationPiles = new Foundation();
         wastePile = new Waste();
         Location selectedLocation = null;
     }
@@ -42,5 +42,23 @@ public class Game {
 
     public Waste getWastePile() {
         return wastePile;
+    }
+
+    public boolean canMoveWasteToHand() {
+        return hand.isEmpty();
+    }
+
+    public void WasteToHand() {
+        if (canMoveWasteToHand()) {
+            wastePile.returnToHand();
+        }
+    }
+
+    public boolean canMoveHandToWaste(){
+        return !hand.isEmpty();
+    }
+
+    public void handToWaste(){
+        wastePile.returnToHand();
     }
 }

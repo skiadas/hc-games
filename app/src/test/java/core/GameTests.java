@@ -29,7 +29,7 @@ public class GameTests {
     public void checkHandSizeAfterGameStart() {
         Game game = new Game();
         game.initializeGameWithShuffledHand();
-        assertEquals(game.getHand().size(), 24);
+        assertEquals(24, game.getHand().size());
     }
 
 }
