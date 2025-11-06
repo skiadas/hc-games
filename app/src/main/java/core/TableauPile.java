@@ -1,5 +1,6 @@
 package core;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +68,15 @@ public class TableauPile {
         Card toBeAdded = cards.get(0);
         Card topCard = pile.get(pile.size() - 1);
         return toBeAdded.ranksDirectlyBelow(topCard) && !toBeAdded.isSameColorAs(topCard);
+    }
+
+    public void writeTo(PrintStream stream) {
+        List<String> cardStrings = new ArrayList<>();
+
+        for (int i = 1; i <= numberOfCardsInPile(); i++) {
+            cardStrings.add(((i == lowestVisibleIndex) ? "*" : "")
+                                + pile.get(i).toString());
+        }
+        stream.print(String.join(" ", cardStrings));
     }
 }

@@ -1,9 +1,11 @@
 package core;
 
+import com.google.common.collect.Table;
 import core.locations.TableauLocation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
 import java.util.List;
 
 import static core.Suit.*;
@@ -75,6 +77,27 @@ class TableauTests {
                 tableau.lookAt(new TableauLocation(2, 1)));
     }
 
+    @Test
+    void canWriteATableauToAFile() {
+        String tableauString = "*AS\n" +
+                "4H *3D\n" +
+                "8C 2D *KD\n" +
+                "6H 7S QH *JD\n" +
+                "6D JH JC 10C *8H\n" +
+                "5H AD KC 10S AC *6C\n" +
+                "9H 6S QC 10H 5S 8D *5C";
+        Tableau tableau = Tableau.from(new ByteArrayInputStream(tableauString.getBytes()));
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        PrintStream stream = new PrintStream(output);
+        tableau.writeTo(stream);
+        assertEquals(tableauString, output.toString());
+    }
+
+    //        Tableau tableau = new Tableau(Hand.shuffledFullDeck());
+//        File tableauFile = new File("TableauTest.tbl");
+//        PrintStream stream = new PrintStream(tableauFile);
+//        tableau.writeTo(stream);
 
 
 }

@@ -3,6 +3,8 @@ package core;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,6 +121,15 @@ public class TableauPileTests {
         assertFalse(pile.canAccept(List.of(new Card(6, SPADES))));
         assertFalse(pile.canAccept(List.of(new Card(5, DIAMONDS))));
         assertFalse(pile.canAccept(List.of(new Card(7, CLUBS))));
+    }
+
+    @Test
+    void tableauPileCorrectlyWritesToStream() {
+        TableauPile pile = new TableauPile(List.of(Card.from("AH"), Card.from("KD"), Card.from("5C"), Card.from("QD")), 2);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        PrintStream stream = new PrintStream(output);
+        pile.writeTo(stream);
+        assertEquals("AH KD *5C QD", output.toString());
     }
 
 }

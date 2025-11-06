@@ -3,6 +3,7 @@ package core;
 import core.locations.TableauLocation;
 
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,8 +32,11 @@ public class Tableau {
             String pileString = input.nextLine();
             String[] cardStrings = pileString.split(" ");
             List<Card> cards = new ArrayList<>();
-            for (int i = 1; i < cardStrings.length; i++) {
-                if (cardStrings[i].contains("*")) visibilityMarker = i;
+            for (int i = 0; i < cardStrings.length; i++) {
+                if (cardStrings[i].contains("*")) {
+                    visibilityMarker = i + 1;
+                    cardStrings[i] = cardStrings[i].substring(1);
+                }
                 cards.add(Card.from(cardStrings[i]));
             }
             tableau.piles[pile] = new TableauPile(cards, (cards.size() - visibilityMarker) + 1);
@@ -41,6 +45,14 @@ public class Tableau {
         return tableau;
     }
 
+    public void writeTo(PrintStream stream) {
+        for (int i = 0; i < 7; i++) {
+            piles[i].writeTo(stream);
+            if (i != 6) {
+                stream.print("\n");
+            }
+        }
+    }
 
     public List<Card> lookAt(TableauLocation location) {
         return piles[getPileAt(location)].look(location.getCard());
