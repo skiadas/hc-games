@@ -16,17 +16,9 @@ class TableauTests {
     private Tableau tableau;
 
     @BeforeEach
-    void setUp() {
-        List<Card> cards = List.of(
-                new Card(1, HEARTS),
-                new Card(10, SPADES), new Card(6, DIAMONDS),
-                new Card(1, HEARTS), new Card(1, HEARTS), new Card(5, HEARTS),
-                new Card(8, HEARTS), new Card(2, HEARTS), new Card(3, HEARTS), new Card(5, CLUBS),
-                new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS),
-                new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS),
-                new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS), new Card(1, HEARTS)
-        );
-        tableau = new Tableau(new Hand(cards));
+    void setUp() throws FileNotFoundException {
+        InputStream stream = TableauTests.class.getClassLoader().getResourceAsStream("TableauTestsTableau.tbl");
+        tableau = Tableau.from(stream);
     }
 
     @Test
@@ -41,15 +33,15 @@ class TableauTests {
 
     @Test
     void canGetCardsAtAnIndexFromASpecificPile() {
-        assertEquals(List.of(new Card(5, HEARTS)), tableau.lookAt(new TableauLocation(3, 3)));
+        assertEquals(List.of(new Card(13, DIAMONDS)), tableau.lookAt(new TableauLocation(3, 3)));
     }
 
     @Test
     void canCheckThatAMoveIsValid() {
-        List<Card> cards = tableau.lookAt(new TableauLocation(3, 3));
-        assertFalse(tableau.canAccept(new TableauLocation(2, 0), cards));
-        cards = tableau.lookAt(new TableauLocation(4, 4));
-        assertTrue(tableau.canAccept(new TableauLocation(2, 0), cards));
+        List<Card> cards = tableau.lookAt(new TableauLocation(5, 5));
+        assertFalse(tableau.canAccept(new TableauLocation(6, 6), cards));
+        cards = tableau.lookAt(new TableauLocation(7, 7));
+        assertTrue(tableau.canAccept(new TableauLocation(6, 6), cards));
     }
 
     @Test
@@ -60,21 +52,25 @@ class TableauTests {
     }
 
     @Test
-    void canPickUpCards() {
+    void PickingUpCardsRemovesThemFromTheirPile() {
         List<Card> cards = tableau.pickUpAt(new TableauLocation(4, 4));
-        assertEquals(List.of(new Card(5, CLUBS)), cards);
-        assertEquals(List.of(new Card(8, HEARTS), new Card(2, HEARTS), new Card(3, HEARTS)), tableau.lookAt(new TableauLocation(4, 1)));
+        assertEquals(List.of(new Card(11, DIAMONDS)), cards);
+        assertEquals(List.of(new Card(6, HEARTS), new Card(7, SPADES), new Card(12, HEARTS)), tableau.lookAt(new TableauLocation(4, 1)));
     }
 
     @Test
     void canDropCards() {
-        List<Card> cards = List.of(new Card(5, SPADES), new Card(4, HEARTS));
-        tableau.dropAt(new TableauLocation(2, 2), cards);
-        assertEquals(List.of(new Card(10, SPADES),
-                    new Card(6, DIAMONDS),
-                    new Card(5, SPADES),
-                    new Card(4, HEARTS)),
-                tableau.lookAt(new TableauLocation(2, 1)));
+        List<Card> cards = List.of(new Card(5, DIAMONDS), new Card(4, CLUBS));
+        tableau.dropAt(new TableauLocation(6, 6), cards);
+        assertEquals(List.of(new Card(5, HEARTS),
+                    new Card(1, DIAMONDS),
+                    new Card(13, CLUBS),
+                    new Card(10, SPADES),
+                    new Card(1, CLUBS),
+                    new Card(6, CLUBS),
+                    new Card(5, DIAMONDS),
+                    new Card(4, CLUBS)),
+                tableau.lookAt(new TableauLocation(6, 1)));
     }
 
     @Test
@@ -83,21 +79,14 @@ class TableauTests {
                 "4H *3D\n" +
                 "8C 2D *KD\n" +
                 "6H 7S QH *JD\n" +
-                "6D JH JC 10C *8H\n" +
+                "6D JH JC 10C *5C\n" +
                 "5H AD KC 10S AC *6C\n" +
-                "9H 6S QC 10H 5S 8D *5C";
-        Tableau tableau = Tableau.from(new ByteArrayInputStream(tableauString.getBytes()));
+                "9H 6S QC 10H 5S 8D *5H";
+//        Tableau tableau = Tableau.from(new ByteArrayInputStream(tableauString.getBytes()));
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintStream stream = new PrintStream(output);
         tableau.writeTo(stream);
         assertEquals(tableauString, output.toString());
     }
-
-    //        Tableau tableau = new Tableau(Hand.shuffledFullDeck());
-//        File tableauFile = new File("TableauTest.tbl");
-//        PrintStream stream = new PrintStream(tableauFile);
-//        tableau.writeTo(stream);
-
-
 }
