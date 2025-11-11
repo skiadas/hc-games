@@ -16,19 +16,19 @@ class TableauTests {
     private Tableau tableau;
 
     @BeforeEach
-    void setUp() throws FileNotFoundException {
+    void setUp() {
         InputStream stream = TableauTests.class.getClassLoader().getResourceAsStream("TableauTestsTableau.tbl");
         tableau = Tableau.from(stream);
     }
 
     @Test
     void canCreateEmptyTableau() {
-        Tableau tableau = new Tableau();
+        tableau = new Tableau();
     }
 
     @Test
     void canCreateTableauFromStandardDeck() {
-        Tableau tableau = new Tableau(Hand.shuffledFullDeck());
+        tableau = new Tableau(Hand.shuffledFullDeck());
     }
 
     @Test
@@ -82,7 +82,6 @@ class TableauTests {
                 "6D JH JC 10C *5C\n" +
                 "5H AD KC 10S AC *6C\n" +
                 "9H 6S QC 10H 5S 8D *5H";
-//        Tableau tableau = Tableau.from(new ByteArrayInputStream(tableauString.getBytes()));
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintStream stream = new PrintStream(output);
