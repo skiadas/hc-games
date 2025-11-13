@@ -36,7 +36,7 @@ public class App {
                 }
             };
 
-            frame.setSize(2000,1200);
+            frame.setSize(1600,800);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.add(new UIMain(adapter));
             frame.setVisible(true);
