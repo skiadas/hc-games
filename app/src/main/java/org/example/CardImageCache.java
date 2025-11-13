@@ -14,20 +14,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CardImageCache implements Serializable {
+    private static final CardImageCache instance = new CardImageCache();
     private static final Color BORDER_COLOR = Color.BLACK;
     private final BufferedImage deckImage;
     private BufferedImage backImage;
     private final Map<Card, BufferedImage> map;
     private final Map<Card, Icon> icons;
-    static final int CARD_WIDTH = 475;
-    static final int CARD_HEIGHT = 675;
-    static final int X_OFFSET = 306;
-    static final int Y_OFFSET = 182;
-    static final int X_GAP = 39;
-    static final int Y_GAP = 47;
+    private static final int CARD_WIDTH = 475;
+    private static final int CARD_HEIGHT = 675;
+    private static final int X_OFFSET = 306;
+    private static final int Y_OFFSET = 182;
+    private static final int X_GAP = 39;
+    private static final int Y_GAP = 47;
     private static final int BORDER_SIZE = 1;
+    private Dimension targetSize;
 
-    public CardImageCache() {
+    private CardImageCache() {
         map = new HashMap<>();
         icons = new HashMap<>();
         try {
@@ -39,15 +41,25 @@ public class CardImageCache implements Serializable {
         } catch (IOException e) {
             throw new RuntimeException("Unable to locate image files");
         }
+        targetSize = new Dimension(100, 200);
         backImage = createBackImage();
     }
 
+    public static CardImageCache getInstance() {
+        return instance;
+    }
+
+    static Dimension computeSizeForHeight(int height) {
+        int width = height * CARD_WIDTH / CARD_HEIGHT;
+        return new Dimension(width, height);
+    }
+
     private BufferedImage createBackImage() {
-        return resizeImage(getImageAtOffset(13,2), UICard.TARGET_SIZE);
+        return resizeImage(getImageAtOffset(13,2), targetSize);
     }
 
     BufferedImage getResizedImage(Card card) {
-        return map.computeIfAbsent(card, card1 -> resizeImage(getCardImage(card1), UICard.TARGET_SIZE));
+        return map.computeIfAbsent(card, card1 -> resizeImage(getCardImage(card1), targetSize));
     }
 
     BufferedImage resizeImage(BufferedImage originalImage, Dimension size) {
@@ -92,7 +104,7 @@ public class CardImageCache implements Serializable {
     private BufferedImage clip(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        int cornerRadius = UICard.TARGET_SIZE.height / 10;
+        int cornerRadius = targetSize.height / 10;
         BufferedImage maskedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = maskedImage.createGraphics();
 
@@ -115,5 +127,10 @@ public class CardImageCache implements Serializable {
     void reset() {
         map.clear();
         backImage = createBackImage();
+    }
+
+    public void setSize(Dimension targetSize) {
+        this.targetSize = targetSize;
+        reset();
     }
 }

@@ -15,7 +15,7 @@ public class UIHand extends UICard {
 
     protected void updateIcon() {
         if (hasCards) {
-            setIcon(cardImageCache.getBackIcon());
+            setIcon(CardImageCache.getInstance().getBackIcon());
             setText(null);
         }
         else {

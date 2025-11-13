@@ -18,9 +18,10 @@ public class UIMain extends JPanel {
     UIMain(MouseListener listener) {
         super(null);
         this.listener = listener;
+        UIFactory uiFactory = UIFactory.getInstance();
         addMouseListener(listener);
         makeEntries();
-        UICard card1 = new UICard(new Card(2, Suit.DIAMONDS));
+        UICard card1 = uiFactory.createUICard(new Card(2, Suit.DIAMONDS));
         card1.addMouseListener(listener);
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke("ctrl A"), "selectAll");
@@ -30,7 +31,7 @@ public class UIMain extends JPanel {
                 card1.setCard(new Card(4, Suit.HEARTS));
             }
         });
-        UICard card2 = new UICard(new Card(5, Suit.CLUBS));
+        UICard card2 = uiFactory.createUICard(new Card(5, Suit.CLUBS));
         card2.addMouseListener(listener);
 //        card2.setPosition(30, 30);
         tableau.add(card1);
@@ -38,7 +39,7 @@ public class UIMain extends JPanel {
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 Dimension size = waste.getSize();
-                UICard.setSizeFromHeight((int) (size.height * 0.8));
+                uiFactory.setSizeFromHeight((int) (size.height * 0.8));
             }
         });
     }
