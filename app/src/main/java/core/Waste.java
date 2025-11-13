@@ -37,6 +37,13 @@ public class Waste {
         return pileCopy;
     }
 
+    public Card getTopCard() {
+        if (pile.isEmpty()) {
+            return null;
+        }
+        return pile.get(pile.size() - 1);
+    }
+
     private void reversePile(List<Card> copyPile) {
         Collections.reverse(copyPile);
     }

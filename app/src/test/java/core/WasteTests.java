@@ -68,4 +68,16 @@ public class WasteTests {
         reversePile.add(aceHeart);
         assertEquals(reversePile, returnPile);
     }
+
+    @Test
+    void getTopCardFromWaste(){
+        Waste waste = new Waste();
+        Card aceHeart = new Card(1, HEARTS);
+        waste.add(aceHeart);
+        Card twoHeart = new Card(2, HEARTS);
+        waste.add(twoHeart);
+        Card threeHeart = new Card(3, HEARTS);
+        waste.add(threeHeart);
+        assertEquals(threeHeart,waste.getTopCard());
+    }
 }
