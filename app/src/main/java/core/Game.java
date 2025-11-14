@@ -61,4 +61,17 @@ public class Game {
     public void handToWaste(){
         wastePile.returnToHand();
     }
+
+
+    public Card getTopWasteCard(){
+        return wastePile.getTopCard();
+    }
+
+    public Card removeTopWasteCard(){
+        return wastePile.remove();
+    }
+
+    public boolean canPlaceOntoFoundation(){
+        return foundationPiles.canPlaceCard(getTopWasteCard());
+    }
 }
