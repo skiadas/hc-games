@@ -1,6 +1,7 @@
 package core.locations;
 
+import core.Suit;
+
 public class FoundationLocation implements Location {
-    // We just need rows and columns
-    private int col; // cols are 1 - 4
+    public Suit suit;
 }
