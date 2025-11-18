@@ -28,41 +28,37 @@ public class GameRunner implements ActionHandler {
     public void handle(Action action) {
         if (action instanceof SelectAction) {
             SelectAction se = (SelectAction) action;
+            // Hopefully use state and visitor patterns
             if (currentSelectedLocation == null) {
                 Location fromLocation = se.getFromLocation();
                 if (fromLocation instanceof FoundationLocation) {
                     FoundationLocation fl = (FoundationLocation) fromLocation;
-                    if (!game.getFoundationPiles().isEmpty(fl.suit)) {
-                        game.getFoundationPiles().getTopCard(fl.suit);
+                    if (game.getTopFoundationCard(fl.suit) != null) {
+                        currentSelectedLocation = fl;
+                        // Tell the presenter to tell ui to show the card
                     }
                 } else if (fromLocation instanceof Tableau) {
                     TableauLocation tl = (TableauLocation) fromLocation;
-                    if (game.getTableauPiles().canPickUp(tl)) {
-                        game.getTableauPiles().pickUpAt(tl);
+                    if (game.getTopTableauCard(tl.getPile()) != null) {
+                        currentSelectedLocation = tl;
+                        // Tell the presenter to tell ui to show the card
                     }
                 } else if (fromLocation instanceof WasteLocation) {
-                    if (!game.getWastePile().isEmpty()) {
-                        game.getWastePile().getTopCard();
+                    WasteLocation wl = (WasteLocation) fromLocation;
+                    if (game.getTopWasteCard() != null) {
+                        currentSelectedLocation = wl;
+                        // Tell the presenter to tell ui to show the card
                     }
                 } else if (fromLocation instanceof HandLocation) {
-                    if (game.getHand().isEmpty()) {
-                        game.getWastePile().returnToHand();
-                    } else {
-                        game.getHand().drawCard();
-                    }
+                    game.canMoveHandToWaste();
+                    // Tell the presenter to tell ui to show shuffle and return to hand
                 }
-            } else {
-                Location fromLocation = se.getFromLocation();
-                if (fromLocation instanceof FoundationLocation) {
+            } // Handle placing cards until state pattern and visitor pattern implemented
+            if (currentSelectedLocation instanceof FoundationLocation) {
 
-                } else if (fromLocation instanceof TableauLocation) {
-
-                } else if (fromLocation instanceof WasteLocation) {
-
-                } else if (fromLocation instanceof HandLocation) {
-
-                }
             }
         }
     }
+
+
 }
