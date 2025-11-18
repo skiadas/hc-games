@@ -79,4 +79,9 @@ public class TableauPile {
         }
         stream.print(String.join(" ", cardStrings));
     }
+
+    public Card removeTopCard() {
+        if (pile.isEmpty()) return null;
+        return pile.remove(pile.size() - 1);
+    }
 }

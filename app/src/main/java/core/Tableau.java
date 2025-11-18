@@ -80,5 +80,7 @@ public class Tableau {
         piles[getPileAt(tableauLocation)].drop(cards);
     }
 
-
+    public Card getTopTableauCard(int pileNumber) {
+        return piles[pileNumber - 1].removeTopCard();
+    }
 }

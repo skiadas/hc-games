@@ -78,4 +78,8 @@ public class Game {
     public Card getTopFoundationCard(Suit suit){
         return foundationPiles.getTopFoundationCard(suit);
     }
+
+    public Card getTopTableauCard(int pile){
+        return tableauPiles.getTopTableauCard(pile);
+    }
 }
