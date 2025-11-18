@@ -71,7 +71,11 @@ public class Game {
         return wastePile.remove();
     }
 
-    public boolean canPlaceOntoFoundation(){
+    public boolean canPlaceOntoFoundationFromWaste(){
         return foundationPiles.canPlaceCard(getTopWasteCard());
+    }
+
+    public Card getTopFoundationCard(Suit suit){
+        return foundationPiles.getTopFoundationCard(suit);
     }
 }
