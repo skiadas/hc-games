@@ -1,8 +1,5 @@
 package core;
 
-import com.google.common.hash.HashCode;
-
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +25,7 @@ public class Foundation {
         }
     }
 
-    private boolean canPlaceCard(Card card) {
+    public boolean canPlaceCard(Card card) {
         Suit suit = card.getSuit();
         int rank = card.getRank();
         List<Card> pile = piles.get(suit);
@@ -54,5 +51,13 @@ public class Foundation {
 
     private boolean canRemoveCard(Suit suit) {
         return !piles.get(suit).isEmpty();
+    }
+
+    public Card getTopFoundationCard(Suit suit) {
+        List<Card> pile = piles.get(suit);
+        if (pile.isEmpty()) {
+            throw new RuntimeException("Cannot remove from an empty pile.");
+        }
+        return pile.remove(pile.size() - 1);
     }
 }
