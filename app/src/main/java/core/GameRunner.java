@@ -20,6 +20,9 @@ public class GameRunner implements ActionHandler {
         this.currentSelectedLocation = null;
     }
 
+    public Location getCurrentSelectedLocation() {
+        return currentSelectedLocation;
+    }
     public void play() {
 
     }
