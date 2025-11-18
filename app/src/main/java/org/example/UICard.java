@@ -5,7 +5,7 @@ import core.Card;
 import javax.swing.*;
 import java.awt.*;
 
-public class UICard extends JLabel {
+public class UICard extends JLabel implements Updatable {
 
     private Card card;
     private boolean faceUp = true;
@@ -29,7 +29,7 @@ public class UICard extends JLabel {
         updateIcon();
     }
 
-    protected void updateIcon() {
+    public void updateIcon() {
         if (faceUp)
             this.setIcon(CardImageCache.getInstance().getIcon(this.card));
         else

@@ -12,23 +12,29 @@ public class UIFactory {
          return instance;
      }
 
-    private final WeakHashMap<UICard, Boolean> createdCards = new WeakHashMap<>();
+    private final WeakHashMap<Updatable, Boolean> updatables = new WeakHashMap<>();
 
     private UIFactory() {
         setSizeFromHeight(200);
     }
 
     void setSizeFromHeight(int height) {
-        Dimension targetSize = CardImageCache.computeSizeForHeight(height);
-        CardImageCache.getInstance().setSize(targetSize);
-        for (UICard uiCard : createdCards.keySet()) {
-            uiCard.setSize(targetSize);
+        Dimension scaledSize = CardImageCache.computeSizeForHeight(height);
+        CardImageCache.getInstance().setScaledSize(scaledSize);
+        for (Updatable u : updatables.keySet()) {
+            u.setSize(scaledSize);
         }
     }
 
     public UICard createUICard(Card card) {
         UICard uiCard = new UICard(card);
-        createdCards.put(uiCard, true);
+        updatables.put(uiCard, true);
         return uiCard;
+    }
+
+    public EmptyCard createEmptyCard(String text) {
+        EmptyCard emptyCard = new EmptyCard(text);
+        updatables.put(emptyCard, true);
+        return emptyCard;
     }
 }

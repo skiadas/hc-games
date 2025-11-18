@@ -1,26 +1,25 @@
 package org.example;
 
-import core.Card;
+import javax.swing.*;
 
-public class UIHand extends UICard {
+public class UIHand extends JPanel {
     boolean hasCards = false;
+    EmptyCard card;
 
     UIHand() {
         super(null);
+        card = UIFactory.getInstance().createEmptyCard("⟳");
+        add(card);
     }
 
-    void setCard(Card card) {
+    public void setHasCards(boolean hasCards) {
+        this.hasCards = hasCards;
+        updateCard();
+    }
+
+    private void updateCard() {
 
     }
 
-    protected void updateIcon() {
-        if (hasCards) {
-            setIcon(CardImageCache.getInstance().getBackIcon());
-            setText(null);
-        }
-        else {
-            setIcon(null);
-            setText("Hello");
-        }
-    }
+
 }

@@ -27,7 +27,7 @@ public class CardImageCache implements Serializable {
     private static final int X_GAP = 39;
     private static final int Y_GAP = 47;
     private static final int BORDER_SIZE = 1;
-    private Dimension targetSize;
+    private Dimension scaledSize;
 
     private CardImageCache() {
         map = new HashMap<>();
@@ -41,7 +41,7 @@ public class CardImageCache implements Serializable {
         } catch (IOException e) {
             throw new RuntimeException("Unable to locate image files");
         }
-        targetSize = new Dimension(100, 200);
+        scaledSize = new Dimension(100, 200);
         backImage = createBackImage();
     }
 
@@ -55,11 +55,11 @@ public class CardImageCache implements Serializable {
     }
 
     private BufferedImage createBackImage() {
-        return resizeImage(getImageAtOffset(13,2), targetSize);
+        return resizeImage(getImageAtOffset(13,2), scaledSize);
     }
 
     BufferedImage getResizedImage(Card card) {
-        return map.computeIfAbsent(card, card1 -> resizeImage(getCardImage(card1), targetSize));
+        return map.computeIfAbsent(card, card1 -> resizeImage(getCardImage(card1), scaledSize));
     }
 
     BufferedImage resizeImage(BufferedImage originalImage, Dimension size) {
@@ -104,7 +104,7 @@ public class CardImageCache implements Serializable {
     private BufferedImage clip(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        int cornerRadius = targetSize.height / 10;
+        int cornerRadius = scaledSize.height / 10;
         BufferedImage maskedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = maskedImage.createGraphics();
 
@@ -129,8 +129,8 @@ public class CardImageCache implements Serializable {
         backImage = createBackImage();
     }
 
-    public void setSize(Dimension targetSize) {
-        this.targetSize = targetSize;
+    public void setScaledSize(Dimension targetSize) {
+        this.scaledSize = targetSize;
         reset();
     }
 }
