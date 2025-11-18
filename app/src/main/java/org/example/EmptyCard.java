@@ -5,15 +5,16 @@ import java.awt.*;
 
 public class EmptyCard extends JLabel implements Updatable {
     private final String text;
-    private boolean showBack = true;
+    private boolean showBack = false;
+    private final double PX_TO_PTS = 0.75;
+    private final double TEXT_SCALE = 0.75;
 
 
     EmptyCard(String text) {
         super(text);
         this.text = text;
-        setBorder(new RoundedBorder(25));
+        setBorder(new RoundedBorder(15));
         setHorizontalAlignment(SwingConstants.CENTER);
-        setFont(new Font("SansSerif", Font.BOLD, 100));
         updateIcon();
     }
 
@@ -26,7 +27,8 @@ public class EmptyCard extends JLabel implements Updatable {
         super.setSize(d);
         setMinimumSize(d);
         setMaximumSize(d);
-        setFont(new Font("SansSerif", Font.PLAIN, (int) (d.width * 0.75 * 0.75)));
+        setFont(new Font("SansSerif", Font.PLAIN, (int) (d.width * PX_TO_PTS * TEXT_SCALE)));
+        updateIcon();
     }
 
     public void updateIcon() {

@@ -1,7 +1,6 @@
 package org.example;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class UIWaste extends JPanel {
@@ -13,9 +12,12 @@ public class UIWaste extends JPanel {
         Component leftPad = Box.createHorizontalStrut(10);
         Component midPad = Box.createHorizontalStrut(15);
         waste.setLayout(new BoxLayout(waste, BoxLayout.X_AXIS));
-        waste.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+
         hand.setLayout(new BoxLayout(hand, BoxLayout.X_AXIS));
-//        hand.setBorder(BorderFactory.createLineBorder(Color.RED));
+
+        // FOR TESTING PURPOSES
+        hand.setBorder(BorderFactory.createLineBorder(Color.RED));
+        waste.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
         add(leftPad);
         add(hand);

@@ -14,11 +14,7 @@ public class UIHand extends JPanel {
 
     public void setHasCards(boolean hasCards) {
         this.hasCards = hasCards;
-        updateCard();
-    }
-
-    private void updateCard() {
-
+        card.setShowBack(this.hasCards);
     }
 
 
