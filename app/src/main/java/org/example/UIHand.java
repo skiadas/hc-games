@@ -10,6 +10,7 @@ public class UIHand extends JPanel {
         super(null);
         card = UIFactory.getInstance().createEmptyCard("⟳");
         add(card);
+        setHasCards(true);
     }
 
     public void setHasCards(boolean hasCards) {
