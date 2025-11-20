@@ -49,7 +49,7 @@ public class Foundation {
         throw new RuntimeException("Cannot remove from an empty pile.");
     }
 
-    private boolean canRemoveCard(Suit suit) {
+    public boolean canRemoveCard(Suit suit) {
         return !piles.get(suit).isEmpty();
     }
 

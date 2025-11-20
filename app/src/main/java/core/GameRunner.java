@@ -36,27 +36,31 @@ public class GameRunner implements ActionHandler {
                 Location fromLocation = se.getFromLocation();
                 if (fromLocation instanceof FoundationLocation) {
                     FoundationLocation fl = (FoundationLocation) fromLocation;
-                    if (game.getTopFoundationCard(fl.suit) != null) {
+                    if (game.canPickUpFromFoundation(fl.suit)) {
                         currentSelectedLocation = fl;
                         // Tell the presenter to tell ui to show the card
                     }
                 } else if (fromLocation instanceof Tableau) {
                     TableauLocation tl = (TableauLocation) fromLocation;
-                    if (game.getTopTableauCard(tl.getPile()) != null) {
+                    if (game.canPickUpFromTableau(tl)) {
                         currentSelectedLocation = tl;
                         // Tell the presenter to tell ui to show the card
                     }
                 } else if (fromLocation instanceof WasteLocation) {
                     WasteLocation wl = (WasteLocation) fromLocation;
-                    if (game.getTopWasteCard() != null) {
+                    if (game.canPickUpFromWaste()) {
                         currentSelectedLocation = wl;
                         // Tell the presenter to tell ui to show the card
                     }
                 } else if (fromLocation instanceof HandLocation) {
-                    game.canMoveHandToWaste();
+                    HandLocation hl = (HandLocation) fromLocation;
+                    if (game.canMoveHandToWaste()) {
+                        currentSelectedLocation = hl;
+                    }
                     // Tell the presenter to tell ui to show shuffle and return to hand
                 }
-            } // Handle placing cards until state pattern and visitor pattern implemented
+            }
+            if (currentSelectedLocation == se.getFromLocation()) currentSelectedLocation = null;
             if (currentSelectedLocation instanceof FoundationLocation) {
 
             }

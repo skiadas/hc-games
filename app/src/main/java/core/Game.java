@@ -45,18 +45,10 @@ public class Game {
         return wastePile;
     }
 
-    public boolean canMoveWasteToHand() {
-        return hand.isEmpty();
-    }
-
     public void WasteToHand() {
         if (canMoveWasteToHand()) {
             wastePile.returnToHand();
         }
-    }
-
-    public boolean canMoveHandToWaste(){
-        return !hand.isEmpty();
     }
 
     public void handToWaste(){
@@ -84,7 +76,23 @@ public class Game {
         return tableauPiles.getTopTableauCard(pile);
     }
 
+    public boolean canMoveHandToWaste(){
+        return !hand.isEmpty();
+    }
+
+    public boolean canMoveWasteToHand() {
+        return hand.isEmpty();
+    }
+
     public boolean canPickUpFromTableau(TableauLocation location) {
         return tableauPiles.canPickUp(location);
+    }
+
+    public boolean canPickUpFromFoundation(Suit suit) {
+        return foundationPiles.canRemoveCard(suit);
+    }
+
+    public boolean canPickUpFromWaste() {
+        return !wastePile.isEmpty();
     }
 }
