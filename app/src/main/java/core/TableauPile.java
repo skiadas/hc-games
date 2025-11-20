@@ -81,6 +81,7 @@ public class TableauPile {
     }
 
     public Card removeTopCard() {
+        // May need removed
         if (pile.isEmpty()) return null;
         return pile.remove(pile.size() - 1);
     }

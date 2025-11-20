@@ -1,6 +1,7 @@
 package core;
 
 import core.locations.Location;
+import core.locations.TableauLocation;
 
 public class Game {
 
@@ -81,5 +82,9 @@ public class Game {
 
     public Card getTopTableauCard(int pile){
         return tableauPiles.getTopTableauCard(pile);
+    }
+
+    public boolean canPickUpFromTableau(TableauLocation location) {
+        return tableauPiles.canPickUp(location);
     }
 }
