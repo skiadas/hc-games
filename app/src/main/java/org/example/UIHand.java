@@ -3,11 +3,12 @@ package org.example;
 import javax.swing.*;
 
 public class UIHand extends JPanel {
-    boolean hasCards = false;
+    boolean hasCards;
     EmptyCard card;
 
     UIHand() {
-        super(null);
+        super();
+        setLayout(new BoxLayout(this,  BoxLayout.X_AXIS));
         card = UIFactory.getInstance().createEmptyCard("⟳");
         add(card);
         setHasCards(true);

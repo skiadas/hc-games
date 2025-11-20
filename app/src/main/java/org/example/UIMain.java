@@ -6,12 +6,13 @@ import core.Suit;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 import static java.awt.GridBagConstraints.BOTH;
 
 public class UIMain extends JPanel {
     private final MouseListener listener;
-    private UIWaste waste;
+    private UIWasteHand waste;
     private JPanel foundation;
     private JPanel tableau;
 
@@ -31,11 +32,12 @@ public class UIMain extends JPanel {
                 card1.setCard(new Card(4, Suit.HEARTS));
             }
         });
-        UICard card2 = uiFactory.createUICard(new Card(5, Suit.CLUBS));
+        Card card1Card = new Card(5, Suit.CLUBS);
+        UICard card2 = uiFactory.createUICard(card1Card);
         card2.addMouseListener(listener);
 //        card2.setPosition(30, 30);
         tableau.add(card1);
-        waste.addToWaste(card2);
+        waste.showInWaste(List.of(card1Card));
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 Dimension size = waste.getSize();
@@ -45,7 +47,7 @@ public class UIMain extends JPanel {
     }
 
     private void makeEntries() {
-        waste = new UIWaste();
+        waste = new UIWasteHand();
         foundation = new JPanel();
         tableau = new JPanel();
         arrangeItems();

@@ -1,31 +1,30 @@
 package org.example;
 
+import core.Card;
+
 import javax.swing.*;
-import java.awt.*;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UIWaste extends JPanel {
-    JPanel waste = new JPanel();
-    JPanel hand = new UIHand();
+    List<UICard> uiCards = new ArrayList<>();
+    JLayeredPane cardPane = new JLayeredPane();
 
-    UIWaste() {
+    public UIWaste() {
+        super();
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        Component leftPad = Box.createHorizontalStrut(10);
-        Component midPad = Box.createHorizontalStrut(15);
-        waste.setLayout(new BoxLayout(waste, BoxLayout.X_AXIS));
 
-        hand.setLayout(new BoxLayout(hand, BoxLayout.X_AXIS));
-
-        // FOR TESTING PURPOSES
-        hand.setBorder(BorderFactory.createLineBorder(Color.RED));
-        waste.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-
-        add(leftPad);
-        add(hand);
-        add(midPad);
-        add(waste);
+        add(cardPane);
     }
 
-    void addToWaste(UICard card) {
-        waste.add(card);
+    public void showCards(List<Card> cards) {
+        for (Card card : cards) {
+            uiCards.add(UIFactory.getInstance().createUICard(card));
+        }
+        updateCards();
+    }
+
+    private void updateCards() {
     }
 }
