@@ -1,7 +1,6 @@
 package core;
 
-import core.locations.Location;
-import core.locations.TableauLocation;
+import core.locations.*;
 
 public class Game {
 
@@ -95,4 +94,20 @@ public class Game {
     public boolean canPickUpFromWaste() {
         return !wastePile.isEmpty();
     }
+
+    public boolean canPickUpAt(Location l) {
+        if (l instanceof FoundationLocation) {
+            return canPickUpFromFoundation(((FoundationLocation) l).suit);
+        } else if (l instanceof TableauLocation) {
+            return canPickUpFromTableau((TableauLocation) l);
+        } else if (l instanceof WasteLocation) {
+            return canPickUpFromWaste();
+        } else if (l instanceof HandLocation) {
+            return canMoveHandToWaste();
+            // More needs to happen in this special case
+        } else {
+            throw new RuntimeException("Not supposed to happen");
+        }
+    }
+
 }

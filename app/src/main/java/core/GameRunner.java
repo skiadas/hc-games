@@ -33,36 +33,19 @@ public class GameRunner implements ActionHandler {
             SelectAction se = (SelectAction) action;
             // Hopefully use state and visitor patterns
             Location fromLocation = se.getFromLocation();
-            if (currentSelectedLocation == null) {
-                if (fromLocation instanceof FoundationLocation) {
-                    FoundationLocation fl = (FoundationLocation) fromLocation;
-                    if (game.canPickUpFromFoundation(fl.suit)) {
-                        currentSelectedLocation = fl;
-                        // Tell the presenter to tell ui to show the card
-                    }
-                } else if (fromLocation instanceof Tableau) {
-                    TableauLocation tl = (TableauLocation) fromLocation;
-                    if (game.canPickUpFromTableau(tl)) {
-                        currentSelectedLocation = tl;
-                        // Tell the presenter to tell ui to show the card
-                    }
-                } else if (fromLocation instanceof WasteLocation) {
-                    WasteLocation wl = (WasteLocation) fromLocation;
-                    if (game.canPickUpFromWaste()) {
-                        currentSelectedLocation = wl;
-                        // Tell the presenter to tell ui to show the card
-                    }
-                } else if (fromLocation instanceof HandLocation) {
-                    HandLocation hl = (HandLocation) fromLocation;
-                    if (game.canMoveHandToWaste()) {
-                        currentSelectedLocation = hl;
-                    }
-                    // Tell the presenter to tell ui to show shuffle and return to hand
-                }
-            }
-
             if (currentSelectedLocation == fromLocation) {
                 currentSelectedLocation = null;
+//            } else if (fromLocation instanceof FoundationLocation) {
+//                handleFoundationSelection((FoundationLocation) fromLocation);
+//            } else if (fromLocation instanceof TableauLocation) {
+//                handleTableauSelection((TableauLocation) fromLocation);
+//            } else if (fromLocation instanceof WasteLocation) {
+//                handleWasteSelection((WasteLocation) fromLocation);
+//            } else if (fromLocation instanceof HandLocation) {
+//                handleHandSelection((HandLocation) fromLocation);
+//            }
+
+
             } else if (currentSelectedLocation instanceof FoundationLocation) {
                 if (fromLocation instanceof FoundationLocation) {
                     FoundationLocation fl = (FoundationLocation) fromLocation;
