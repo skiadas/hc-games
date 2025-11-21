@@ -153,5 +153,20 @@ public class Game {
         }
     }
 
+    public boolean getCardsAt(Location l) {
+        if (l instanceof FoundationLocation) {
+            return true;
+        } else if (l instanceof TableauLocation) {
+            return true;
+        } else if (l instanceof WasteLocation) {
+            return true;
+        } else if (l instanceof HandLocation) {
+            return true;
+            // More needs to happen in this special case
+        } else {
+            throw new RuntimeException("Not supposed to happen");
+        }
+    }
+
 
 }
