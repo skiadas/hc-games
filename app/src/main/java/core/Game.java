@@ -2,6 +2,8 @@ package core;
 
 import core.locations.*;
 
+import java.util.List;
+
 public class Game {
 
     private Waste wastePile;
@@ -71,27 +73,23 @@ public class Game {
         return foundationPiles.getTopFoundationCard(suit);
     }
 
-    public Card getTopTableauCard(int pile){
-        return tableauPiles.getTopTableauCard(pile);
-    }
-
-    public boolean canMoveHandToWaste(){
+    private boolean canMoveHandToWaste(){
         return !hand.isEmpty();
     }
 
-    public boolean canMoveWasteToHand() {
+    private boolean canMoveWasteToHand() {
         return hand.isEmpty();
     }
 
-    public boolean canPickUpFromTableau(TableauLocation location) {
+    private boolean canPickUpFromTableau(TableauLocation location) {
         return tableauPiles.canPickUp(location);
     }
 
-    public boolean canPickUpFromFoundation(Suit suit) {
+    private boolean canPickUpFromFoundation(Suit suit) {
         return foundationPiles.canRemoveCard(suit);
     }
 
-    public boolean canPickUpFromWaste() {
+    private boolean canPickUpFromWaste() {
         return !wastePile.isEmpty();
     }
 
@@ -109,5 +107,51 @@ public class Game {
             throw new RuntimeException("Not supposed to happen");
         }
     }
+
+    public boolean canDropAt(Location l, List<Card> cards) {
+        if (l instanceof FoundationLocation) {
+            return true;
+        } else if (l instanceof TableauLocation) {
+            return true;
+        } else if (l instanceof WasteLocation) {
+            return true;
+        } else if (l instanceof HandLocation) {
+            return true;
+            // More needs to happen in this special case
+        } else {
+            throw new RuntimeException("Not supposed to happen");
+        }
+    }
+
+    public boolean pickUpAt(Location l) {
+        if (l instanceof FoundationLocation) {
+            return true;
+        } else if (l instanceof TableauLocation) {
+            return true;
+        } else if (l instanceof WasteLocation) {
+            return true;
+        } else if (l instanceof HandLocation) {
+            return true;
+            // More needs to happen in this special case
+        } else {
+            throw new RuntimeException("Not supposed to happen");
+        }
+    }
+
+    public boolean dropAt(Location l, List<Card> cards) {
+        if (l instanceof FoundationLocation) {
+            return true;
+        } else if (l instanceof TableauLocation) {
+            return true;
+        } else if (l instanceof WasteLocation) {
+            return true;
+        } else if (l instanceof HandLocation) {
+            return true;
+            // More needs to happen in this special case
+        } else {
+            throw new RuntimeException("Not supposed to happen");
+        }
+    }
+
 
 }
