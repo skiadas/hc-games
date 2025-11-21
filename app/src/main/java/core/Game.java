@@ -73,11 +73,11 @@ public class Game {
         return foundationPiles.getTopFoundationCard(suit);
     }
 
-    private boolean canMoveHandToWaste(){
+    boolean canMoveHandToWaste(){
         return !hand.isEmpty();
     }
 
-    private boolean canMoveWasteToHand() {
+    boolean canMoveWasteToHand() {
         return hand.isEmpty();
     }
 
@@ -123,7 +123,7 @@ public class Game {
         }
     }
 
-    public boolean pickUpAt(Location l) {
+    public List<Card> pickUpAt(Location l) {
         if (l instanceof FoundationLocation) {
             return true;
         } else if (l instanceof TableauLocation) {
@@ -138,7 +138,7 @@ public class Game {
         }
     }
 
-    public boolean dropAt(Location l, List<Card> cards) {
+    public void dropAt(Location l, List<Card> cards) {
         if (l instanceof FoundationLocation) {
             return true;
         } else if (l instanceof TableauLocation) {
@@ -153,7 +153,7 @@ public class Game {
         }
     }
 
-    public boolean getCardsAt(Location l) {
+    public List<Card> getCardsAt(Location l) {
         if (l instanceof FoundationLocation) {
             return true;
         } else if (l instanceof TableauLocation) {
