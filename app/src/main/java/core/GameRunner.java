@@ -1,6 +1,8 @@
 package core;
 
 import core.actions.Action;
+import core.actions.DeselectAction;
+import core.actions.ExitAction;
 import core.actions.SelectAction;
 import core.locations.*;
 
@@ -33,31 +35,61 @@ public class GameRunner implements ActionHandler {
             SelectAction se = (SelectAction) action;
             // Hopefully use state and visitor patterns
             Location location = se.getFromLocation();
-            if (location instanceof HandLocation) {
-                if (game.canMoveWasteToHand()) {
-                    //move
-                }
-            }
 
             if (currentSelectedLocation == location) {
-                currentSelectedLocation = null;
-            } else if (currentSelectedLocation == null) {
+                resetSelection();
+                return;
+            }
+            if (location instanceof HandLocation) {
+                attemptWasteToHand();
+                attemptHandToWaste();
+                resetSelection();
+                return;
+            }
+            if (currentSelectedLocation == null) {
                 attemptSelect(location);
             } else {
                 attemptMoveTo(location);
             }
+        } else if (action instanceof DeselectAction) {
+            resetSelection();
+        } else if (action instanceof ExitAction) {
+            // presenter instructions to EXIT
+        }
+    }
+
+    private void resetSelection() {
+        currentSelectedLocation = null;
+        // presenter instructions
+
+    }
+
+    private void attemptHandToWaste() {
+        if (game.canMoveHandToWaste()) {
+            game.handToWaste();
+            // presenter instructions
+        }
+    }
+
+    private void attemptWasteToHand() {
+        if (game.canMoveWasteToHand()) {
+            game.WasteToHand();
+            // presenter instructions
         }
     }
 
     private void attemptMoveTo(Location location) {
         if (game.canDropAt(location, game.getCardsAt(currentSelectedLocation))) {
             game.dropAt(location, game.pickUpAt(currentSelectedLocation));
+            // presenter instructions
+
         }
     }
 
     private void attemptSelect(Location location) {
         if (game.canPickUpAt(location)) {
             currentSelectedLocation = location;
+            // presenter instructions
         }
     }
 }
