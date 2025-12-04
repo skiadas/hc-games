@@ -2,6 +2,8 @@ package core;
 
 import core.locations.*;
 
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -168,6 +170,13 @@ public class Game {
             throw new RuntimeException("Not supposed to happen");
         }
     }
+
+    public void wasteWriteTo(PrintStream stream){
+        List<String> cardStrings = new ArrayList<>();
+        cardStrings.add(wastePile.getTopCard().toString());
+        stream.print(String.join(" ", cardStrings));
+    }
+
 
 
 }
