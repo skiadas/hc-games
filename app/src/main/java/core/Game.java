@@ -53,10 +53,9 @@ public class Game {
         wastePile.returnToHand();
     }
 
-    public void handToWaste(){
-        wastePile.returnToHand();
+    public Card handToWaste(){
+        return hand.drawCard();
     }
-
 
     public List<Card> getTopWasteCard(){
         return Collections.singletonList(wastePile.getTopCard());
