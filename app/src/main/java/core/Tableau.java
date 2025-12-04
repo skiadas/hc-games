@@ -79,11 +79,4 @@ public class Tableau {
     public void dropAt(TableauLocation tableauLocation, List<Card> cards) {
         piles[getPileAt(tableauLocation)].drop(cards);
     }
-
-    public Card getTopTableauCard(int pileNumber) {
-        // Irrelevant, needs removed (canPickUp & pickUpAt do the same thing
-        // Plus, you can pick up from any visible card in the Tableau, not just
-        // the top card.
-        return piles[pileNumber - 1].removeTopCard();
-    }
 }

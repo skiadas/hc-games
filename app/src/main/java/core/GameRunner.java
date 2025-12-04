@@ -6,6 +6,8 @@ import core.actions.ExitAction;
 import core.actions.SelectAction;
 import core.locations.*;
 
+import java.util.List;
+
 /**
  * Class responsible for running a game. Eventually
  * should hold some Game instance
@@ -13,13 +15,18 @@ import core.locations.*;
 public class GameRunner implements ActionHandler {
     private final Game game;
     Presenter presenter;
-    private Location currentSelectedLocation;
-    private Suit suit;
+    private Location currentSelectedLocation = null;
 
     public GameRunner(Presenter presenter) {
+        //TESTED
+        this(presenter, new Game());
+    }
+
+    GameRunner(Presenter presenter, Game game) {
+        //TESTED
         this.presenter = presenter;
-        this.game = new Game();
-        this.currentSelectedLocation = null;
+        this.game = game;
+        // Send game state to presenter
     }
 
     public Location getCurrentSelectedLocation() {
@@ -34,9 +41,10 @@ public class GameRunner implements ActionHandler {
         if (action instanceof SelectAction) {
             SelectAction se = (SelectAction) action;
             // Hopefully use state and visitor patterns
-            Location location = se.getFromLocation();
+            Location location = se.getLocation();
 
             if (currentSelectedLocation == location) {
+                //TESTED
                 resetSelection();
                 return;
             }
@@ -47,50 +55,88 @@ public class GameRunner implements ActionHandler {
                 return;
             }
             if (currentSelectedLocation == null) {
+                //TESTED
                 attemptSelect(location);
             } else {
+                //
                 attemptMoveTo(location);
             }
         } else if (action instanceof DeselectAction) {
+            //TESTED
             resetSelection();
         } else if (action instanceof ExitAction) {
-            // presenter instructions to EXIT
+            //TESTED
+            presenter.exit();
         }
     }
 
     private void resetSelection() {
+        presenter.setHighlightAt(currentSelectedLocation, false);
         currentSelectedLocation = null;
-        // presenter instructions
+
 
     }
 
     private void attemptHandToWaste() {
         if (game.canMoveHandToWaste()) {
-            game.handToWaste();
-            // presenter instructions
+           presenter.showAtWaste(List.of(game.handToWaste()));
+
+           if (game.canMoveWasteToHand()) presenter.showHandEmpty();
+
         }
     }
 
     private void attemptWasteToHand() {
         if (game.canMoveWasteToHand()) {
-            game.WasteToHand();
-            // presenter instructions
+            game.wasteToHand();
+            presenter.showAtWaste(null);
+            presenter.showHandFull();
         }
     }
 
     private void attemptMoveTo(Location location) {
         if (game.canDropAt(location, game.getCardsAt(currentSelectedLocation))) {
-            game.dropAt(location, game.pickUpAt(currentSelectedLocation));
-            // presenter instructions
+
+            List<Card> pickedCards = game.pickUpAt(currentSelectedLocation);
+            game.dropAt(location, pickedCards);
+
+            if (currentSelectedLocation instanceof WasteLocation) {
+                presenter.showAtWaste(null); // NEED A FUNCTION IN GAME FOR LOOKING AT REVEALED WASTE CARD
+
+            } else if (currentSelectedLocation instanceof FoundationLocation) {
+                int cardRank = pickedCards.get(0).getRank();
+                Suit cardSuit = pickedCards.get(0).getSuit();
+
+                if (cardRank - 1 >= 1) {
+                    presenter.showAtFoundation(cardSuit, new Card(cardRank - 1, cardSuit));
+                } else {
+                    presenter.showAtFoundation(cardSuit, null);
+                }
+
+            } else if (currentSelectedLocation instanceof TableauLocation) {
+                presenter.removeAt((TableauLocation) currentSelectedLocation);
+            }
+
+            if (location instanceof FoundationLocation) {
+                presenter.showAtFoundation(pickedCards.get(0).getSuit(), pickedCards.get(0));
+            } else if (location instanceof TableauLocation) {
+                presenter.addAt(((TableauLocation) location).getPile(), pickedCards);
+            }
+
+            resetSelection();
+
+
 
         }
     }
 
     private void attemptSelect(Location location) {
         if (game.canPickUpAt(location)) {
+            //TESTED
+            presenter.setHighlightAt(location, true);
             currentSelectedLocation = location;
-            // presenter instructions
         }
+        //TESTED
     }
 }
 
