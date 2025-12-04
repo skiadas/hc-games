@@ -53,8 +53,8 @@ public class Game {
         wastePile.returnToHand();
     }
 
-    public Card handToWaste(){
-        return hand.drawCard();
+    public void handToWaste(){
+         wastePile.add(hand.drawCard());
     }
 
     public List<Card> getTopWasteCard(){
@@ -175,6 +175,16 @@ public class Game {
         cardStrings.add(wastePile.getTopCard().toString());
         stream.print(String.join(" ", cardStrings));
     }
+
+    public void tableauPileWriteTo(PrintStream stream){
+        tableauPiles.writeTo(stream);
+    }
+
+    public void foundationWriteTo(PrintStream stream){
+
+    }
+
+    //either print number of cards or what is actually there
 
 
 
