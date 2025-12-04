@@ -1,9 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Foundation {
     private Map<Suit, List<Card>> piles;
@@ -53,11 +50,11 @@ public class Foundation {
         return !piles.get(suit).isEmpty();
     }
 
-    public Card getTopFoundationCard(Suit suit) {
+    public List<Card> getTopFoundationCard(Suit suit) {
         List<Card> pile = piles.get(suit);
         if (pile.isEmpty()) {
             throw new RuntimeException("Cannot remove from an empty pile.");
         }
-        return pile.remove(pile.size() - 1);
+        return Collections.singletonList(pile.remove(pile.size() - 1));
     }
 }
