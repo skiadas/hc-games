@@ -24,4 +24,5 @@ public interface Presenter {
 
     void addAt(int pile, List<Card> cards);
 
+    void addAt(TableauLocation location, List<Card> cards);
 }

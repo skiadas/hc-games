@@ -114,13 +114,9 @@ public class GameRunner implements ActionHandler {
             if (location instanceof FoundationLocation) {
                 presenter.showAtFoundation(pickedCards.get(0).getSuit(), pickedCards.get(0));
             } else if (location instanceof TableauLocation) {
-                presenter.addAt(((TableauLocation) location).getPile(), pickedCards);
+                presenter.addAt((TableauLocation) location, pickedCards);
             }
-
             resetSelection();
-
-
-
         }
     }
 
