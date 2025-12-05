@@ -22,7 +22,6 @@ public class Game {
         tableauPiles = new Tableau(hand);
         foundationPiles = new Foundation();
         wastePile = new Waste();
-        Location selectedLocation = null;
     }
 
     public void initializeGameWithShuffledHand() {
@@ -30,7 +29,6 @@ public class Game {
         tableauPiles = new Tableau(hand);
         foundationPiles = new Foundation();
         wastePile = new Waste();
-        Location selectedLocation = null;
     }
 
     public Hand getHand() {
@@ -49,7 +47,7 @@ public class Game {
         return wastePile;
     }
 
-    public void WasteToHand() {
+    public void wasteToHand() {
         wastePile.returnToHand();
     }
 

@@ -10,7 +10,6 @@ import core.actions.SelectAction;
 import core.locations.HandLocation;
 import core.locations.Location;
 import core.locations.TableauLocation;
-import core.locations.WasteLocation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -106,17 +105,29 @@ public class GameRunnerTests {
         Action selectAction = new SelectAction(location);
         when(gameMock.canMoveWasteToHand()).thenReturn(false);
         when(gameMock.canMoveHandToWaste()).thenReturn(true);
-        when(gameMock.handToWaste()).thenReturn(new Card(1, Suit.HEARTS));
+        when(gameMock.getTopWasteCard()).thenReturn(List.of(new Card(1, Suit.HEARTS)));
         gameRunner.handle(selectAction);
 
-        verify(gameMock).canMoveWasteToHand();
+        verify(gameMock, times(2)).canMoveWasteToHand();
         verify(gameMock).canMoveHandToWaste();
         verify(gameMock).handToWaste();
-        verify(presenterMock).showAt(new WasteLocation(), List.of(new Card(1, Suit.HEARTS)));
+        verify(gameMock).getTopWasteCard();
+        verify(presenterMock).showAtWaste(List.of(new Card(1, Suit.HEARTS)));
     }
 
     @Test
     void selectingEmptyHandBringsWasteToHand() {
+        Location location = new HandLocation();
+        Action selectAction = new SelectAction(location);
+        when(gameMock.canMoveWasteToHand()).thenReturn(true);
+        when(gameMock.canMoveHandToWaste()).thenReturn(false);
+        gameRunner.handle(selectAction);
 
+        verify(gameMock).canMoveWasteToHand();
+        verify(gameMock).canMoveHandToWaste();
+        verify(gameMock).wasteToHand();
+        verify(presenterMock).showAtWaste(null);
+        verify(presenterMock).showHandFull();
     }
+
 }
