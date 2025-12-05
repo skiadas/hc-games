@@ -44,7 +44,7 @@ public class TableauPile {
     }
 
     public List<Card> pickUp(int index) {
-        if (numberOfCardsInPile() <= 1) throw new RuntimeException("pickUp(index) should not be called on an empty TableauPile");
+        if (numberOfCardsInPile() < 1) throw new RuntimeException("pickUp(index) should not be called on an empty TableauPile");
 
         List<Card> subList = pile.subList(index, pile.size());
         List<Card> picked = new ArrayList<>(subList);

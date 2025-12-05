@@ -5,10 +5,10 @@ import core.Card;
 import core.Presenter;
 import core.Suit;
 import core.actions.SelectAction;
-import core.locations.Location;
-import core.locations.TableauLocation;
+import core.locations.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -34,6 +34,7 @@ public class UIController implements MouseListener, CreationListener<Component>,
         if (l != null) {
             System.out.println(l.getGameLocation());
             actionHandler.handle(new SelectAction(l.getGameLocation()));
+            frame.repaint();
         }
     }
 
@@ -74,7 +75,11 @@ public class UIController implements MouseListener, CreationListener<Component>,
     public void setHighlightAt(Location location, Boolean b) {
         Locateable element = findElement(location);
         if (element instanceof JComponent jEl) {
-            jEl.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+            if (b) {
+                jEl.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+            } else {
+                jEl.setBorder(BorderFactory.createEmptyBorder());
+            }
         }
     }
 
@@ -102,26 +107,55 @@ public class UIController implements MouseListener, CreationListener<Component>,
     }
 
     public void showAtFoundation(Suit suit, Card card) {
-
+        Locateable element = findElement(new FoundationLocation(suit));
+        UICard uiCard = (UICard) element;
+        uiCard.setCard(card);
+        uiCard.setVisible();
     }
 
     public void showAtWaste(List<Card> cards) {
-
+        Locateable element = findElement(new WasteLocation());
+        UIWaste waste = (UIWaste) element;
+        waste.showCards(cards);
     }
 
     public void showHandEmpty() {
-
+        Locateable element = findElement(new HandLocation());
+        UIHand hand = (UIHand) element;
+        hand.setHasCards(false);
     }
 
     public void showHandFull() {
-
+        Locateable element = findElement(new HandLocation());
+        UIHand hand = (UIHand) element;
+        hand.setHasCards(true);
     }
 
     public void removeAt(TableauLocation location) {
+        System.out.println("Removing cards at: " + location);
+        Locateable element = findElement(location);
+        UICard uiCard = (UICard) element;
+        Container parent = uiCard.getParent();
+        Component[] components = parent.getComponents();
+        for (Component component : components) {
+            if (component instanceof Locateable lcomp) {
+                Location loc = lcomp.getGameLocation();
+                if (((TableauLocation) loc).getCard() >= location.getCard()) {
+                    parent.remove(component);
+                }
+            }
+        }
 
     }
 
     public void addAt(int pile, List<Card> cards) {
 
+    }
+
+    public void addAt(TableauLocation loc, List<Card> cards) {
+        System.out.println("Adding cards at: " + loc);
+        UICard lastCard = (UICard) findElement(loc);
+        UILayeredCards parent = (UILayeredCards) lastCard.getParent();
+        parent.addCards(cards);
     }
 }

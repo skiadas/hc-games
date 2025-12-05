@@ -3,9 +3,7 @@
  */
 package org.example;
 
-import core.Card;
-import core.Presenter;
-import core.Suit;
+import core.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,20 +13,22 @@ public class App {
 
     private final UIController controller;
     private JFrame frame;
+    private UIMain main;
 
     public App() {
         controller = new UIController();
     }
 
-    public void run() {
+    public void run(Game game) {
         SwingUtilities.invokeLater(() ->{
             frame = new JFrame("Game");
             controller.setFrame(frame);
 
             frame.setSize(1600,800);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            UIMain main = new UIMain(controller);
+            main = new UIMain(controller);
             frame.add(main);
+            main.setUpForGame(game);
             frame.setVisible(true);
             frame.addComponentListener(new ComponentAdapter() {
                 public void componentResized(ComponentEvent e) {

@@ -1,5 +1,8 @@
 package org.example;
 
+import core.Card;
+import core.locations.Location;
+import core.locations.TableauLocation;
 import org.jspecify.annotations.NonNull;
 
 import javax.swing.*;
@@ -12,13 +15,14 @@ import java.util.List;
  * a horizontal direction
  */
 public class UILayeredCards extends JLayeredPane implements Updatable {
-    private enum LayeringDirection {Horizontal, Vertical}
+
+
+    private enum LayeringDirection {Horizontal, Vertical;}
     private static final double SKIP_PCT = 0.15;
     private Dimension cardSize = new Dimension(200, 200); // Initial dummy values
     private Dimension skip;
     private final LayeringDirection direction;
     private List<UICard> cards;
-
     static UILayeredCards vertical() {
         return new UILayeredCards(LayeringDirection.Vertical);
     }
@@ -45,6 +49,22 @@ public class UILayeredCards extends JLayeredPane implements Updatable {
             add(card, Integer.valueOf(i));
         }
         determineBounds();
+    }
+
+    void addCards(List<Card> newCards) {
+        int size = cards.size();
+        UICard lastCard = cards.get(size - 1);
+        TableauLocation lastLocation = (TableauLocation) lastCard.getGameLocation();
+        for (int i = 0; i < newCards.size(); i++) {
+            UICard uiCard = UIFactory.getInstance().createUICard(newCards.get(i));
+            TableauLocation newLocation = new TableauLocation(lastLocation.getPile(), size + i + 1);
+            uiCard.setLocation(newLocation);
+            cards.add(uiCard);
+            add(uiCard, Integer.valueOf(size + i));
+            uiCard.setVisible(true);
+        }
+        determineBounds();
+        repaint();
     }
 
     private void determineBounds() {

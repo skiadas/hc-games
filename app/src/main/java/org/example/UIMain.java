@@ -23,20 +23,13 @@ public class UIMain extends JPanel {
     UIMain(MouseListener listener) {
         super(null);
         this.listener = listener;
-        UIFactory uiFactory = UIFactory.getInstance();
         makeEntries();
-        UICard card1 = uiFactory.createUICard(new Card(2, Suit.DIAMONDS));
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke("ctrl A"), "selectAll");
 
-        getActionMap().put("selectAll", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                card1.setCard(new Card(4, Suit.HEARTS));
-            }
-        });
-        Card card1Card = new Card(5, Suit.CLUBS);
-        Game game = new Game();
-        game.initializeGameWithShuffledHand();
+    }
+
+    void setUpForGame(Game game) {
         for (int i = 0; i < 7; i++) { // Don't hardcode 7?
             TableauLocation loc = new TableauLocation(i + 1, 1);
             Tableau tableauPiles = game.getTableauPiles();
@@ -54,7 +47,6 @@ public class UIMain extends JPanel {
             }
             tableau.addCards(loc, uiCards);
         }
-        waste.showInWaste(List.of(card1Card));
     }
 
     private void makeEntries() {

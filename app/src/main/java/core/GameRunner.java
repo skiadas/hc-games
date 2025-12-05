@@ -22,7 +22,7 @@ public class GameRunner implements ActionHandler {
         this(presenter, new Game());
     }
 
-    GameRunner(Presenter presenter, Game game) {
+    public GameRunner(Presenter presenter, Game game) {
         //TESTED
         this.presenter = presenter;
         this.game = game;
