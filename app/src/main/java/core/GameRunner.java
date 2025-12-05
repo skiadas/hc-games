@@ -40,11 +40,9 @@ public class GameRunner implements ActionHandler {
     public void handle(Action action) {
         if (action instanceof SelectAction) {
             SelectAction se = (SelectAction) action;
-            // Hopefully use state and visitor patterns
             Location location = se.getLocation();
 
             if (currentSelectedLocation == location) {
-                //TESTED
                 resetSelection();
                 return;
             }
@@ -55,17 +53,13 @@ public class GameRunner implements ActionHandler {
                 return;
             }
             if (currentSelectedLocation == null) {
-                //TESTED
                 attemptSelect(location);
             } else {
-                //
                 attemptMoveTo(location);
             }
         } else if (action instanceof DeselectAction) {
-            //TESTED
             resetSelection();
         } else if (action instanceof ExitAction) {
-            //TESTED
             presenter.exit();
         }
     }
@@ -132,11 +126,9 @@ public class GameRunner implements ActionHandler {
 
     private void attemptSelect(Location location) {
         if (game.canPickUpAt(location)) {
-            //TESTED
             presenter.setHighlightAt(location, true);
             currentSelectedLocation = location;
         }
-        //TESTED
     }
 }
 
