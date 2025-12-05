@@ -183,12 +183,15 @@ public class Game {
     // currently only does the top card but in the future should do all the visible cards
     public void foundationWriteTo(PrintStream stream,Suit suit){
         List<String> cardStrings = new ArrayList<>();
+        cardStrings.add(suit.toString());
         cardStrings.add(foundationPiles.getTopFoundationCard(suit).toString());
         stream.print(String.join(" ", cardStrings));
     }
 
     //just prints the number of cards in the hand
     public void handWriteTo(PrintStream stream){
-        stream.print(hand.size());
+        String handSizeString = "" + hand.size();
+        stream.print(handSizeString);
+
     }
 }
