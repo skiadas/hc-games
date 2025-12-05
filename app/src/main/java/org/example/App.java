@@ -4,42 +4,44 @@
 package org.example;
 
 import core.Card;
+import core.Presenter;
 import core.Suit;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class App {
 
+    private final UIController controller;
     private JFrame frame;
 
-    public static void main(String[] args) throws Exception {
-        App app = new App();
-        app.run();
+    public App() {
+        controller = new UIController();
     }
 
-    private void run() {
+    public void run() {
         SwingUtilities.invokeLater(() ->{
             frame = new JFrame("Game");
-            MouseListener adapter = new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    Object source = e.getSource();
-                    System.out.println(source);
-                    if (source instanceof UICard) {
-                        ((UICard) source).flip();
-                        frame.repaint();
-                    }
-                }
-            };
+            controller.setFrame(frame);
 
             frame.setSize(1600,800);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new UIMain(adapter));
+            UIMain main = new UIMain(controller);
+            frame.add(main);
             frame.setVisible(true);
+            frame.addComponentListener(new ComponentAdapter() {
+                public void componentResized(ComponentEvent e) {
+                    Rectangle bounds = frame.getBounds();
+                    int cardHeight = (int) (bounds.height * 0.2);
+                    UIFactory.getInstance().setSizeFromHeight(cardHeight);
+                }
+            });
+
         });
+    }
+
+    public UIController getController() {
+        return controller;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UIWasteHand extends JPanel {
     UIWaste waste = new UIWaste();
-    JPanel hand = new UIHand();
+    JPanel hand = UIFactory.getInstance().createHand();
 
     UIWasteHand() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

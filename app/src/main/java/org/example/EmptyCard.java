@@ -23,7 +23,7 @@ public class EmptyCard extends JLabel implements Updatable {
         updateIcon();
     }
 
-    public void setSize(Dimension d) {
+    public void setCardSize(Dimension d) {
         super.setSize(d);
         setMinimumSize(d);
         setMaximumSize(d);

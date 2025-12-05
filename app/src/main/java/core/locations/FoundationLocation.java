@@ -7,6 +7,10 @@ import java.util.Objects;
 public class FoundationLocation implements Location {
     public Suit suit;
 
+    public FoundationLocation(Suit suit) {
+        this.suit = suit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

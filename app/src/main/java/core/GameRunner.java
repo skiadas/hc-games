@@ -79,7 +79,7 @@ public class GameRunner implements ActionHandler {
 
     private void attemptHandToWaste() {
         if (game.canMoveHandToWaste()) {
-           presenter.showAtWaste(List.of(game.handToWaste()));
+//           presenter.showAtWaste(List.of(game.handToWaste()));
 
            if (game.canMoveWasteToHand()) presenter.showHandEmpty();
 
@@ -88,7 +88,7 @@ public class GameRunner implements ActionHandler {
 
     private void attemptWasteToHand() {
         if (game.canMoveWasteToHand()) {
-            game.wasteToHand();
+//          FIXME      game.wasteToHand();
             presenter.showAtWaste(null);
             presenter.showHandFull();
         }
