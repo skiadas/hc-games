@@ -18,8 +18,10 @@ public class GameRunner implements ActionHandler {
     private Location currentSelectedLocation = null;
 
     public GameRunner(Presenter presenter) {
-        //TESTED
-        this(presenter, new Game());
+        Game game = new Game();
+        game.initializeGameWithShuffledHand();
+        this.presenter = presenter;
+        this.game = game;
     }
 
     public GameRunner(Presenter presenter, Game game) {
@@ -31,9 +33,6 @@ public class GameRunner implements ActionHandler {
 
     public Location getCurrentSelectedLocation() {
         return currentSelectedLocation;
-    }
-    public void play() {
-
     }
 
     @Override
